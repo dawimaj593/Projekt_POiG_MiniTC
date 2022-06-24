@@ -1,0 +1,73 @@
+﻿<Window x:Class="MiniTC.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MiniTC"
+        xmlns:vm="clr-namespace:MiniTC.ViewModel"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Title="MiniTC" Height="800" Width="1000" Background="LightGray">
+    
+    <Window.DataContext>
+        <vm:ViewModel></vm:ViewModel>
+    </Window.DataContext>
+    
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="30"></Setter>
+            <Setter Property="Width" Value="80"></Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <local:PanelTC 
+            Grid.Column="0"
+            Grid.Row="0"
+            CurrentPath="{Binding Left, Mode=TwoWay}"
+            AllDrives="{Binding Path=CurrentDrives}" 
+            AllFiles="{Binding Path=CurrentLeftFiles}" 
+            CurrentFile="{Binding Path=SelectedFile, Mode=TwoWay}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding LeftChceck}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </local:PanelTC>
+
+        <local:PanelTC 
+            Grid.Column="1" 
+            Grid.Row="0"
+            CurrentPath="{Binding Right, Mode=TwoWay}"
+            AllDrives="{Binding Path=CurrentDrives}" 
+            AllFiles="{Binding Path=CurrentRightFiles}" 
+            CurrentFile="{Binding Path=SelectedFile, Mode=TwoWay}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding RightCheck}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </local:PanelTC>
+        
+        <Button 
+            Grid.Row="1" 
+            Grid.ColumnSpan="2"
+            Content="Copy>>">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:InvokeCommandAction Command="{Binding Copy}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
+        
+    </Grid>
+</Window>
